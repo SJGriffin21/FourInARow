@@ -19,9 +19,6 @@ fun main() {
   System.out.println("Please enter a location (0-35) or enter 'q' to quit")
   userInput = readln();
 
-
-//  userInput.toInt();
-//  System.out.println(userInput);
    if (userInput != "q") {
     if (FIR_board.checkBoard(userInput.toInt()) == 0) {
      FIR_board.setMove(1, userInput.toInt());

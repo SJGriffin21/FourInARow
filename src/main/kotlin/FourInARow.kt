@@ -35,7 +35,6 @@ class FourInARow
 //         0
         Random.nextInt(1,30)
 
-
     override fun checkForWinner(): Int {
         // TODO Auto-generated method stub
         var counter1 = 0
