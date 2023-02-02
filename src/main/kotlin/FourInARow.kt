@@ -15,7 +15,7 @@ class FourInARow
     private val board = Array(GameConstants.ROWS) { IntArray(GameConstants.COLS){0} }
 
     override fun clearBoard() {
-        // TODO Auto-generated method stub
+        //Go through the array setting to 0
         for (row in 0 until GameConstants.ROWS) {
             for (col in 0 until GameConstants.COLS) {
             board[row][col] = 0
@@ -24,7 +24,7 @@ class FourInARow
     }
 
     override fun setMove(player: Int, location: Int) {
-        // TODO Auto-generated method stub
+        //Find the row an column for the location number
         var row = location / board[0].size;
         var column = location % board[0].size;
         board[row][column] = player;
@@ -32,56 +32,125 @@ class FourInARow
 
     override val computerMove: Int
         get() =// TODO Auto-generated method stub
-//         0
+//   return a random number
         Random.nextInt(1,30)
 
     override fun checkForWinner(): Int {
-        // TODO Auto-generated method stub
-        var counter1 = 0
-        var counter2 = 0
+        // Check horizontal and vertical spaces for winner
+        var counter0 = 0
+        var hCounter1 = 0
+        var hCounter2 = 0
+        var vCounter1 = 0
+        var vCounter2 = 0
         for (row in 0 until GameConstants.ROWS) {
-            counter1 = 0
-            counter2 = 0
+            hCounter1 = 0
+            hCounter2 = 0
             for (col in 0 until GameConstants.COLS) {
                 if (board[row][col] == 0) {
-                    counter1 = 0
-                    counter2 = 0
+                    counter0 +=1
+                    hCounter1 = 0
+                    hCounter2 = 0
                 } else if (board[row][col] == 1) {
-                    counter1 = counter1 + 1
-                    counter2 = 0
-                    if (counter1 >= 4) {
+                    hCounter1 += 1
+                    hCounter2 = 0
+                    if (hCounter1 >= 4) {
                         return 3
                     }
                 } else if (board[row][col] == 2) {
-                    counter1 = 0
-                    counter2 += 1
-                    if (counter2 >= 4) {
+                    hCounter1 = 0
+                    hCounter2 += 1
+                    if (hCounter2 >= 4) {
+                        return 2
+                    }
+                }
+                if (board[col][row] == 0) {
+                    vCounter1 = 0
+                    vCounter2 = 0
+                } else if (board[col][row] == 1) {
+                    vCounter1 += 1
+                    vCounter2 = 0
+                    if (vCounter1 >= 4) {
+                        return 3
+                    }
+                } else if (board[col][row] == 2) {
+                    vCounter1 = 0
+                    vCounter2 += 1
+                    if (vCounter2 >= 4) {
                         return 2
                     }
                 }
             }
         }
-        for (col in 0 until GameConstants.ROWS) {
-            counter1 = 0
-            counter2 = 0
-            for (row in 0 until GameConstants.COLS) {
-                if (board[row][col] == 0) {
-                    counter1 = 0
-                    counter2 = 0
-                } else if (board[row][col] == 1) {
-                    counter1 = counter1 + 1
-                    counter2 = 0
-                    if (counter1 >= 4) {
-                        return 3
+// Check diagonals for win
+        var dCounter1 = 0
+        var dCounter2 = 0
+        for (row in 0 until GameConstants.ROWS) {
+            for (col in 0 until GameConstants.COLS) {
+                var i = row
+                var j = col
+                do{
+                    if (board[i][j] == 0){
+                        dCounter1 = 0
+                        dCounter2 = 0
                     }
-                } else if (board[row][col] == 2) {
-                    counter1 = 0
-                    counter2 += 1
-                    if (counter2 >= 4) {
-                        return 2
+                    else if (board[i][j] == 1){
+                        dCounter1 += 1
+                        dCounter2 = 0
+                        if (dCounter1 >= 4){
+                            return  3
+                        }
                     }
+                    else if (board[i][j] == 2){
+                        dCounter1 = 0
+                        dCounter2 += 1
+                        if (dCounter2 >= 4){
+                            return  2
+                        }
+                    }
+                    i += 1
+                    j += 1
                 }
+                while (i < GameConstants.ROWS && j < GameConstants.COLS)
+
             }
+        }
+
+        dCounter1 = 0
+        dCounter2 = 0
+        for (row in 0 until  GameConstants.ROWS) {
+            for (col in GameConstants.COLS-1 downTo  0) {
+                var i = row
+                var j = col
+                do{
+                    if (board[i][j] == 0){
+                        dCounter1 = 0
+                        dCounter2 = 0
+                    }
+                    else if (board[i][j] == 1){
+                        dCounter1 += 1
+                        dCounter2 = 0
+                        if (dCounter1 >= 4){
+                            return  3
+                        }
+                    }
+                    else if (board[i][j] == 2){
+                        dCounter1 = 0
+                        dCounter2 += 1
+                        if (dCounter2 >= 4){
+                            return  2
+                        }
+                    }
+                    i += 1
+                    j -= 1
+                }
+                while (i < GameConstants.ROWS && j >=0)
+
+            }
+        }
+
+
+        if (counter0 == 0){
+            return 1
         }
         return 0
     }

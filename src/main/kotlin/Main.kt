@@ -18,7 +18,7 @@ fun main() {
    */
   System.out.println("Please enter a location (0-35) or enter 'q' to quit")
   userInput = readln();
-
+// If user input is not q run through one round of putting spaces on th board and check for a win
    if (userInput != "q") {
     if (FIR_board.checkBoard(userInput.toInt()) == 0) {
      FIR_board.setMove(1, userInput.toInt());
